@@ -8,6 +8,95 @@
   </head>
   <body>
     <h1>Ellee's Emoji Coder</h1>
+    <div class="mb-3">
+        <label for="english" class="form-label">English</label>
+        <textarea class="form-control" id="english" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="emoji" class="form-label">Emoji</label>
+        <textarea class="form-control" id="emoji" rows="3"></textarea>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/grapheme-splitter@1.0.4/index.min.js"></script>
+    <script>
+        var englishToEmojiDict = {
+            "a": "🍎",
+            "b": "😢",
+            "c": "👏",
+            "d": "☀️",
+            "e": "🏃🏽‍♀️",
+            "f": "🥷",
+            "g": "🔥",
+            "h": "👩‍🏫",
+            "i": "👩‍",
+            "j": "💨",
+            "k": "🍉",
+            "l": "🧍‍♀️",
+            "m": "🦸",
+            "n": "🏰",
+            "o": "🍊",
+            "p": "✉️",
+            "q": "📩",
+            "r": "🧑‍🎤",
+            "s": "🏳️‍⚧️",
+            "t": "✈️",
+            "u": "🇺🇸",
+            "v": "🌊",
+            "w": "👨🏻‍💻",
+            "x": "🗝",
+            "y": "💜",
+            "z": "🧟‍♂️",
+        }
+
+        function englishToEmoji(c) {
+            if (c in englishToEmojiDict
+                && englishToEmojiDict[c]
+                && englishToEmojiDict[c] !== "") {
+                    return englishToEmojiDict[c];
+            }
+            return c;
+        }
+
+        var emojiToEnglishDict = {};
+        for (c in englishToEmojiDict) {
+            var e = englishToEmojiDict[c];
+            emojiToEnglishDict[e] = c;
+        }
+
+        function emojiToEnglish(e) {
+            if (e in emojiToEnglishDict
+                && emojiToEnglishDict[e]
+                && emojiToEnglishDict[e] !== "") {
+                    return emojiToEnglishDict[e];
+            }
+            return e;
+        }
+
+        var splitter = new GraphemeSplitter();
+
+        $(document).ready(function() {
+            $("#english").keyup(function() {
+                var eng = splitter.splitGraphemes($(this).val());
+                var emoj = "";
+                for (var c of eng) {
+                    c = c.toLowerCase();
+                    var e = englishToEmoji(c);
+                    emoj = emoj + e;
+                }
+                $("#emoji").val(emoj);
+            });
+
+            $("#emoji").keyup(function() {
+                var emoj = splitter.splitGraphemes($(this).val());
+                var eng = "";
+                for (var e of emoj) {
+                    var c = emojiToEnglish(e);
+                    eng = eng + c;
+                }
+                $("#english").val(eng);
+            })
+        });
+    </script>
   </body>
 </html>
