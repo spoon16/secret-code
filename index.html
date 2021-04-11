@@ -11,22 +11,27 @@
         <h1>Ellee's Secret Coder</h1>
         <form>
             <div class="form-group row">
-                <label for="key">🗝</label>
-                <input type="text" class="form-control" id="key">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="key-label">🔑</span>
+                    <input type="text" id="key" class="form-control" aria-label="Key" aria-describedby="key-label">
+                    <button class="btn btn-outline-secondary" id="copy-key" type="button">Copy ✉️</button>
+                </div>
             </div>
             <div class="form-group row">
-                <label for="english">🇬🇧</label>
-                <input type="text" class="form-control" id="english">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="english-label">🇬🇧</span>
+                    <input type="text" id="english" class="form-control" aria-label="English" aria-describedby="english-label">
+                    <button class="btn btn-outline-primary" id="encode" type="button">Encode 🔒</button>
+                    <button class="btn btn-outline-secondary" id="copy-english" type="button">Copy ✉️</button>
+                </div>
             </div>
             <div class="form-group row">
-                <button type="button" id="encode" class="btn btn-primary btn-lg">Encode</button>
-            </div>
-            <div class="form-group row">
-                <label for="code">🤫</label>
-                <input type="text" class="form-control" id="code">
-            </div>
-            <div class="form-group row">
-                <button type="button" id="decode" class="btn btn-primary btn-lg">Decode</button>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="code-label">🤫</span>
+                    <input type="text" id="code" class="form-control" aria-label="Code" aria-describedby="code-label">
+                    <button class="btn btn-outline-primary" id="decode" type="button">Decode 🔓</button>
+                    <button class="btn btn-outline-secondary" id="copy-code" type="button">Copy ✉️</button>
+                </div>
             </div>
         </form>
     </div>
@@ -117,6 +122,35 @@
 
             $("#encode").click(updateCode);
             $("#decode").click(updateEnglish);
+
+            $("#copy-key").click(function () {
+                $("#key").select();
+                console.log("Copy Key", document.execCommand("copy"));
+            });
+
+            $("#copy-code").click(function () {
+                $("#code").select();
+                console.log("Copy Code", document.execCommand("copy"));
+            });
+
+            $("#copy-english").click(function () {
+                $("#english").select();
+                console.log("Copy English", document.execCommand("copy"));
+            });
+
+            $("#code").on("input", updateEnglish);
+
+            $("#code-label").click(function () {
+                $("#code").select();
+            });
+
+            $("#english-label").click(function () {
+                $("#english").select();
+            });
+
+            $("#key-label").click(function () {
+                $("#key").select();
+            });
         });
     </script>
   </body>
