@@ -119,6 +119,9 @@
                 keyMoji = $(this).val() || defaultKeyMoji;
                 console.log("--> Key Moji", keyMoji);
             });
+            $("#key").blur(function () {
+                $(this).val(keyMoji);
+            });
 
             $("#encode").click(updateCode);
             $("#decode").click(updateEnglish);
